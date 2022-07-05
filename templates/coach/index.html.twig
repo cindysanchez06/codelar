@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entrenadores{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="title">Entrenadores</h1>
+
+        <div class="row">
+            <table>
+                <tr>
+                    <th> Nombre </th>
+                    <th> Pokemones </th>
+                </tr>
+
+                {% for item in coachs %}
+                    <td>
+                        <h3 class="card-title">{{ item.name }}</h3>
+                    </td>
+                {% endfor %}
+            </table>
+
+        </div>
+    </div>
+{% endblock %}
