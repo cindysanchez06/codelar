@@ -6,17 +6,21 @@
     <div class="container">
         <h1 class="title">Entrenadores</h1>
 
+        <a href="{{ path('new_coach') }}">Nuevo entrenador</a>
+
         <div class="row">
             <table>
                 <tr>
-                    <th> Nombre </th>
-                    <th> Pokemones </th>
+                    <th><h2>Nombre </h2></th>
+                    <th><h2>Pokemones </h2></th>
                 </tr>
 
                 {% for item in coachs %}
-                    <td>
-                        <h3 class="card-title">{{ item.name }}</h3>
-                    </td>
+                    <tr>
+                        <td>
+                            <h3 class="card-title">{{ item.name }}</h3>
+                        </td>
+                    </tr>
                 {% endfor %}
             </table>
 
