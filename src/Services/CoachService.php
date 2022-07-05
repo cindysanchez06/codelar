@@ -10,7 +10,7 @@ class CoachService
     private $coachRepository;
     private $entityManager;
 
-    public function __construct(CoachRepository $coachRepository,  EntityManagerInterface $entityManager )
+    public function __construct(CoachRepository $coachRepository, EntityManagerInterface $entityManager)
     {
         $this->coachRepository = $coachRepository;
         $this->entityManager = $entityManager;
@@ -23,9 +23,19 @@ class CoachService
 
     public function addCoach($data)
     {
-        //$name = $data->name;
-        //$avatar = $data->avatar;
         $this->entityManager->persist($data);
+        $this->entityManager->flush();
+    }
+
+    public function editCoach($data)
+    {
+        $this->entityManager->persist($data);
+        $this->entityManager->flush();
+    }
+
+    public function deleteCoach($coach)
+    {
+        $this->entityManager->remove($coach);
         $this->entityManager->flush();
     }
 }

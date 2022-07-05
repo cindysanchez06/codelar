@@ -13,12 +13,18 @@
                 <tr>
                     <th><h2>Nombre </h2></th>
                     <th><h2>Pokemones </h2></th>
+                    <th><h2>Acciones </h2></th>
                 </tr>
 
                 {% for item in coachs %}
                     <tr>
                         <td>
                             <h3 class="card-title">{{ item.name }}</h3>
+                        </td>
+                        <td></td>
+                        <td>
+                            <a href="{{ path('edit_coach', {id: item.id} ) }}">Editar Entrenador</a>
+                            <a href="{{ path('delete_coach', {id: item.id} ) }}">Eliminar Entrenador</a>
                         </td>
                     </tr>
                 {% endfor %}

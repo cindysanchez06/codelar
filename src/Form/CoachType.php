@@ -18,7 +18,7 @@ class CoachType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true
             ])
-            ->add('avatar', FileType::class, [
+            ->add('avatar', TextType::class, [
                 'required' => true
             ])
             ->add('save', SubmitType::class)

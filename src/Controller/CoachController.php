@@ -7,8 +7,8 @@ use App\Form\CoachType;
 use App\Services\CoachService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class CoachController extends AbstractController
 {
@@ -31,7 +31,7 @@ class CoachController extends AbstractController
     }
 
     /**
-     * @Route("/new-coach", name="new_coach")
+     * @Route("/coach/new", name="new_coach")
      */
     public function create(Request $request)
     {
@@ -48,5 +48,32 @@ class CoachController extends AbstractController
         return $this->renderForm('coach/create.html.twig',[
             'form' => $form
         ]);
+    }
+
+    /**
+     * @Route("/coach/edit/{id}", name="edit_coach")
+     */
+    public function edit(Request $request, Coach $coach)
+    {
+        $form = $this->createForm(CoachType::class, $coach);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $coach = $form->getData();
+            $this->coachService->editCoach($coach);
+            return $this->redirectToRoute('coach');
+        }
+        return $this->renderForm('coach/create.html.twig',[
+            'form' => $form
+        ]);
+    }
+
+    /**
+     * @Route("/coach/delete/{id}", name="delete_coach")
+     */
+    public function delete(Coach $coach)
+    {
+        $this->coachService->deleteCoach($coach);
+        return $this->redirectToRoute('coach');
     }
 }
