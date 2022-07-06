@@ -25,31 +25,38 @@ class CoachType extends AbstractType
     {
         $pokemons = $this->pokemonService->getPokemons();
         $pokemonsFormater = [];
-        foreach ($pokemons as $pokemon)
-        {
-            $pokemonsFormater[$pokemon['name']] =  $pokemon['id'];
+        foreach ($pokemons as $pokemon) {
+            $pokemonsFormater[$pokemon['name']] = $pokemon['id'];
         }
 
-        $builder
-            ->add('name', TextType::class, [
-                'required' => true
-            ])
-            ->add('avatar', TextType::class, [
-                'required' => true
-            ])
-            ->add('pokemons', ChoiceType::class, [
+        $builder->add('name', TextType::class, [
+            'required' => true
+        ]);
+        $builder->add('avatar', TextType::class, [
+            'required' => true
+        ]);
+        if ($options['id_edit']) {
+            $builder->add('pokemons', ChoiceType::class, [
+                'multiple' => true,
+                'choices' => $pokemonsFormater,
+                'mapped' => false,
+            ]);
+        } else {
+            $builder->add('pokemons', ChoiceType::class, [
                 'multiple' => true,
                 'choices' => $pokemonsFormater,
                 'mapped' => false
-            ])
-            ->add('save', SubmitType::class)
-        ;
+            ]);
+        }
+
+        $builder->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Coach::class,
+            'id_edit' => false
         ]);
     }
 }

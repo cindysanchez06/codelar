@@ -38,7 +38,7 @@ class CoachController extends AbstractController
     {
 
         $coach = new Coach();
-        $form = $this->createForm(CoachType::class, $coach);
+        $form = $this->createForm(CoachType::class, $coach, ['id_edit' => false]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -49,7 +49,8 @@ class CoachController extends AbstractController
         }
 
         return $this->renderForm('coach/create.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'title' => 'New Coach'
         ]);
     }
 
@@ -58,7 +59,7 @@ class CoachController extends AbstractController
      */
     public function edit(Request $request, Coach $coach)
     {
-        $form = $this->createForm(CoachType::class, $coach);
+        $form = $this->createForm(CoachType::class, $coach, ['id_edit' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -67,7 +68,8 @@ class CoachController extends AbstractController
             return $this->redirectToRoute('coach');
         }
         return $this->renderForm('coach/create.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'title' => 'Edit Coach'
         ]);
     }
 
