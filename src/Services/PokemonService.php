@@ -25,4 +25,11 @@ class PokemonService
         return $pokemons;
     }
 
+    public function getPokemon(int $id)
+    {
+        $method = 'GET';
+        $url = 'https://pokeapi.co/api/v2/pokemon/' . $id;
+        return $this->requestService->requests($method, $url);
+    }
+
 }

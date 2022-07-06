@@ -3,5 +3,29 @@
 {% block title %}Nuevo Entrenador{% endblock %}
 
 {% block body %}
-    {{ form(form) }}
+    <h1 class="title" style="display: flex;justify-content: center">New Coach</h1>
+
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+
+    <div class="row" style="display: grid; justify-content: center">
+        <div class="col" style="width: 100%; padding: 15px">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="col" style="width: 100%; padding: 15px">
+            {{ form_label(form.avatar) }}
+            {{ form_widget(form.avatar) }}
+        </div>
+        <div class="col" style="width: 100%; padding: 15px">
+            {{ form_label(form.pokemons) }}
+            {{ form_widget(form.pokemons) }}
+        </div>
+        <div class="col" style="width: 100%; padding: 15px">
+            {{ form_row(form.save) }}
+        </div>
+    </div>
+
+
 {% endblock %}

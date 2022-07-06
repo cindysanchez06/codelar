@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entrenadores{% endblock %}
+
+{% block body %}
+
+    <div style="width: 100%; padding-left: 40px;">
+        <div style="display: flex; justify-content: center">
+            <p>
+                <strong>Name: </strong> {{ pokemon.name }}
+            </p>
+            <img style="width: 200px; height: 200px"
+                 src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.id }}.png">
+            <p>
+                <strong>Specie: </strong>{{ pokemon.species.name }}
+            </p>
+        </div>
+        <div>
+            <p>
+                <strong>Types: </strong>
+                {% for type in pokemon.types %}
+                    {{ type.type.name }}
+                {% endfor %}
+            </p>
+        </div>
+        <div>
+            <p>
+                <strong>Abilities</strong>
+                {% for ability in pokemon.abilities %}
+                    {{ ability.ability.name }}
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+
+{% endblock %}

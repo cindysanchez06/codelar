@@ -4,18 +4,18 @@
 
 {% block body %}
     <div class="container">
-        <h1 style="text-align: center" class="title">Entrenadores</h1>
+        <h1 style="text-align: center" class="title">Coach</h1>
 
         <div style="padding-right: 100px">
-            <a style="display: flex; justify-content: end" href="{{ path('new_coach') }}">Nuevo entrenador</a>
+            <a style="display: flex; justify-content: end" href="{{ path('new_coach') }}">New Coach</a>
         </div>
 
         <div>
             <table style="width: 100%; text-align: center">
                 <tr>
-                    <th><h2>Nombre </h2></th>
-                    <th><h2>Pokemones </h2></th>
-                    <th><h2>Acciones </h2></th>
+                    <th><h2>Name </h2></th>
+                    <th><h2>Team Pokemon's </h2></th>
+                    <th><h2>Actions </h2></th>
                 </tr>
 
                 {% for item in coachs %}
@@ -25,12 +25,14 @@
                         </td>
                         <td>
                             {% for pokemon in item.getPokemonCoach %}
-                                <a href="#"><img style="width: 50px; height: 50px" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.getPokemonId }}.png"></a>
+                                <a href="{{ path('pokemon_show',{id: pokemon.getPokemonId}) }}"><img
+                                            style="width: 50px; height: 50px"
+                                            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.getPokemonId }}.png"></a>
                             {% endfor %}
                         </td>
                         <td>
-                            <a href="{{ path('edit_coach', {id: item.id} ) }}">Editar</a>
-                            <a href="{{ path('delete_coach', {id: item.id} ) }}">Eliminar</a>
+                            <a href="{{ path('edit_coach', {id: item.id} ) }}">Edit</a>
+                            <a href="{{ path('delete_coach', {id: item.id} ) }}">Delete</a>
                         </td>
                     </tr>
                 {% endfor %}
