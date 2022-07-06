@@ -6,6 +6,7 @@ use App\Repository\PokemonCoachRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="pokemon_coach")
  * @ORM\Entity(repositoryClass=PokemonCoachRepository::class)
  */
 class PokemonCoach
@@ -18,41 +19,59 @@ class PokemonCoach
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Coach", inversedBy="pokemonCoach")
+     * @ORM\JoinColumn(name="coach_id", referencedColumnName="id")
      */
-    private $idCoach;
+    private $coach;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $idPokemon;
+    private $pokemonId;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdCoach(): ?string
+    /**
+     * @return mixed
+     */
+    public function getCoach(): ?Coach
     {
-        return $this->idCoach;
+        return $this->coach;
     }
 
-    public function setIdCoach(string $idCoach): self
+    /**
+     * @param mixed $coach
+     */
+    public function setCoach(? Coach $coach): self
     {
-        $this->idCoach = $idCoach;
-
+        $this->coach = $coach;
         return $this;
     }
 
-    public function getIdPokemon(): ?string
+    /**
+     * @return mixed
+     */
+    public function getPokemonId()
     {
-        return $this->idPokemon;
+        return $this->pokemonId;
     }
 
-    public function setIdPokemon(string $idPokemon): self
+    /**
+     * @param mixed $pokemonId
+     */
+    public function setPokemonId($pokemonId): void
     {
-        $this->idPokemon = $idPokemon;
+        $this->pokemonId = $pokemonId;
+    }
 
-        return $this;
+    public function addCoach(Coach $coach)
+    {
+        if (!$this->coach->contains($coach))
+        {
+            $this->coach[] = $coach;
+        }
     }
 }

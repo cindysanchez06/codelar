@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Coach;
+use App\Entity\PokemonCoach;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +39,15 @@ class CoachRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getWithPokemons()
+    {
+        return $this->createQueryBuilder('coach')
+            ->join(PokemonCoach::class, 'pokemon_coach',
+                Join::WITH, 'pokemon_coach.coach = coach.id')
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CoachRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,18 @@ class Coach
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $avatar;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PokemonCoach", mappedBy="coach", cascade={"all"})
+     */
+    private $pokemonCoach;
+
+    private $pokemons;
+
+    public function __construct()
+    {
+        $this->pokemonCoach =  new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -55,4 +69,27 @@ class Coach
 
         return $this;
     }
+
+
+    public function getPokemonCoach()
+    {
+        $pokemonsCoach = [];
+        foreach ($this->pokemonCoach as $pokemon)
+        {
+            $pokemonsCoach[] = $pokemon;
+        }
+
+        return $pokemonsCoach;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getPokemons()
+    {
+
+        return $this->pokemons;
+    }
+
 }

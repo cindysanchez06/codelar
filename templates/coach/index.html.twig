@@ -4,12 +4,14 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="title">Entrenadores</h1>
+        <h1 style="text-align: center" class="title">Entrenadores</h1>
 
-        <a href="{{ path('new_coach') }}">Nuevo entrenador</a>
+        <div style="padding-right: 100px">
+            <a style="display: flex; justify-content: end" href="{{ path('new_coach') }}">Nuevo entrenador</a>
+        </div>
 
-        <div class="row">
-            <table>
+        <div>
+            <table style="width: 100%; text-align: center">
                 <tr>
                     <th><h2>Nombre </h2></th>
                     <th><h2>Pokemones </h2></th>
@@ -21,10 +23,14 @@
                         <td>
                             <h3 class="card-title">{{ item.name }}</h3>
                         </td>
-                        <td></td>
                         <td>
-                            <a href="{{ path('edit_coach', {id: item.id} ) }}">Editar Entrenador</a>
-                            <a href="{{ path('delete_coach', {id: item.id} ) }}">Eliminar Entrenador</a>
+                            {% for pokemon in item.getPokemonCoach %}
+                                <a href="#"><img style="width: 50px; height: 50px" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.getPokemonId }}.png"></a>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a href="{{ path('edit_coach', {id: item.id} ) }}">Editar</a>
+                            <a href="{{ path('delete_coach', {id: item.id} ) }}">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}

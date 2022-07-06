@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Coach;
 use App\Form\CoachType;
 use App\Services\CoachService;
+use App\Services\PokemonCoachService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +26,7 @@ class CoachController extends AbstractController
     public function index()
     {
         $coachs = $this->coachService->getAllCoachs();
-        return $this->render('coach/index.html.twig',[
+        return $this->render('coach/index.html.twig', [
             'coachs' => $coachs
         ]);
     }
@@ -35,17 +36,19 @@ class CoachController extends AbstractController
      */
     public function create(Request $request)
     {
+
         $coach = new Coach();
         $form = $this->createForm(CoachType::class, $coach);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $coach = $form->getData();
-            $this->coachService->addCoach($coach);
+            $formCoach = $form->getData();
+            $pokemons = $request->request->get('coach')['pokemons'];
+            $coach = $this->coachService->addCoach($formCoach, $pokemons);
             return $this->redirectToRoute('coach');
         }
 
-        return $this->renderForm('coach/create.html.twig',[
+        return $this->renderForm('coach/create.html.twig', [
             'form' => $form
         ]);
     }
@@ -63,7 +66,7 @@ class CoachController extends AbstractController
             $this->coachService->editCoach($coach);
             return $this->redirectToRoute('coach');
         }
-        return $this->renderForm('coach/create.html.twig',[
+        return $this->renderForm('coach/create.html.twig', [
             'form' => $form
         ]);
     }

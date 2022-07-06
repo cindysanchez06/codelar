@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Entity\Coach;
 use App\Repository\CoachRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -9,22 +10,39 @@ class CoachService
 {
     private $coachRepository;
     private $entityManager;
+    private $pokemonCoachService;
 
-    public function __construct(CoachRepository $coachRepository, EntityManagerInterface $entityManager)
+    public function __construct(CoachRepository $coachRepository, EntityManagerInterface $entityManager, PokemonCoachService $pokemonCoachService)
     {
         $this->coachRepository = $coachRepository;
         $this->entityManager = $entityManager;
+        $this->pokemonCoachService = $pokemonCoachService;
     }
 
     public function getAllCoachs()
     {
+       // return $this->coachRepository->getWithPokemons();
         return $this->coachRepository->findAll();
     }
 
-    public function addCoach($data)
+    /**
+     * @throws \Exception
+     */
+    public function addCoach($formCoach, $pokemons)
     {
-        $this->entityManager->persist($data);
-        $this->entityManager->flush();
+        $this->entityManager->beginTransaction();
+        try {
+            $coach = new Coach();
+            $coach->setName($formCoach->getName());
+            $coach->setAvatar($formCoach->getAvatar());
+            $this->coachRepository->add($coach, true);
+            $this->pokemonCoachService->add($pokemons, $coach);
+            $this->entityManager->commit();
+            return $coach;
+        } catch (\Exception $exception) {
+            $this->entityManager->rollback();
+            throw $exception;
+        }
     }
 
     public function editCoach($data)
@@ -33,9 +51,8 @@ class CoachService
         $this->entityManager->flush();
     }
 
-    public function deleteCoach($coach)
+    public function deleteCoach(Coach $coach)
     {
-        $this->entityManager->remove($coach);
-        $this->entityManager->flush();
+        $this->coachRepository->remove($coach, true);
     }
 }
