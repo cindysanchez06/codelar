@@ -35,6 +35,7 @@ class CoachService
             $coach = new Coach();
             $coach->setName($formCoach->getName());
             $coach->setAvatar($formCoach->getAvatar());
+            $coach->setCreatedAt(new \DateTime());
             $this->coachRepository->add($coach, true);
             $this->pokemonCoachService->add($pokemons, $coach);
             $this->entityManager->commit();

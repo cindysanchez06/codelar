@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PokemonCoachRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Util\TimestampableEntity;
 
 /**
  * @ORM\Table(name="pokemon_coach")
@@ -11,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PokemonCoach
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -73,5 +76,13 @@ class PokemonCoach
         {
             $this->coach[] = $coach;
         }
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt(\DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
     }
 }

@@ -28,6 +28,7 @@ class PokemonCoachService
             $pokemonCoach = new PokemonCoach();
             $pokemonCoach->setCoach($coach);
             $pokemonCoach->setPokemonId($pokemon);
+            $pokemonCoach->setCreatedAt(new \DateTime());
             $this->pokemonCoachRepository->add($pokemonCoach, true);
             $savedPokemonsCoach[] = $pokemonCoach;
         }

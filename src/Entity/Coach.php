@@ -6,12 +6,15 @@ use App\Repository\CoachRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Util\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=CoachRepository::class)
  */
 class Coach
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -82,6 +85,13 @@ class Coach
         return $pokemonsCoach;
     }
 
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt(\DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
 
     /**
      * @return mixed
